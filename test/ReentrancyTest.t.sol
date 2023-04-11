@@ -7,34 +7,34 @@ contract ReentrancyTest is Test {
     Atk public atk;
 
     function setUp() public {
-      r = new Reentrancy();
-      atk = new Atk();
+        r = new Reentrancy();
+        atk = new Atk();
     }
 
     function testDoesItRevert() public {
-      vm.prank(address(atk));
-      vm.expectRevert();
-      r.withdraw();
-      assertEq(address(atk).balance, 0);
+        vm.prank(address(atk));
+        vm.expectRevert();
+        r.withdraw();
+        assertEq(address(atk).balance, 0);
     }
 }
 
 contract Atk {
-  bool public called = false;
+    bool public called = false;
 
-  fallback() external payable {
-    if (called == true) return;
-    called = true;
-    Reentrancy(msg.sender).withdraw();
-  }
+    fallback() external payable {
+        if (called == true) return;
+        called = true;
+        Reentrancy(msg.sender).withdraw();
+    }
 }
 
 contract Reentrancy {
-    mapping(address => uint) public balances;
+    mapping(address => uint256) public balances;
 
     function withdraw() public {
-      balances[msg.sender] += 20;
-      (bool success, ) = msg.sender.call("");
-      require(false);
+        balances[msg.sender] += 20;
+        (bool success,) = msg.sender.call("");
+        require(false);
     }
 }

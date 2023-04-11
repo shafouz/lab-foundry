@@ -12,24 +12,24 @@ contract ForceFeedingTest is Test {
     }
 
     function testBypassesFallbackAndReceive() public {
-      vm.deal(address(atk), 100 ether);
-      atk.destroy(payable(address(ff)));
-      assertEq(address(ff).balance, 100 ether);
+        vm.deal(address(atk), 100 ether);
+        atk.destroy(payable(address(ff)));
+        assertEq(address(ff).balance, 100 ether);
     }
 }
 
 contract Atk {
-  function destroy(address payable addr) public {
-    selfdestruct(addr);
-  }
+    function destroy(address payable addr) public {
+        selfdestruct(addr);
+    }
 }
 
 contract Eater {
-  fallback() external payable {
-    revert();
-  }
+    fallback() external payable {
+        revert();
+    }
 
-  receive() external payable {
-    revert();
-  }
+    receive() external payable {
+        revert();
+    }
 }

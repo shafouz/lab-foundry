@@ -15,22 +15,22 @@ contract Blocks {
     }
 
     function print(string memory a) external payable {
-      console.log(a);
+        console.log(a);
     }
 
     function print1(string memory a) public payable {
-      console.log(a);
+        console.log(a);
     }
 
     function printExternal(string memory a) public payable {
-      this.print(a);
+        this.print(a);
     }
 
     function printExternal1(string memory a) public payable {
-      print1(a);
+        print1(a);
     }
 
     fallback() external payable {
-      console.log("fallback");
+        console.log("fallback");
     }
 }
